@@ -1,5 +1,6 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 
 
 def posts_list(request):
-    return HttpResponse('<h1>Мой блог</h1>')
+    content = 'LAGNER love Django =)'
+    return render(request, 'blog/index.html', context={'text': content})
