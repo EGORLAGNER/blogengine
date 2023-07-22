@@ -5,9 +5,11 @@
 {% endblock %}
 
 {% block content_title %}
-    {{ text }}
-{% endblock %}
 
+{% endblock %}
 {% block content %}
-    палучиласяяяя!!!11адын
+    {% for i in text %}
+        {{ i }}
+
+    {% endfor %}
 {% endblock %}
