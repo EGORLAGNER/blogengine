@@ -5,11 +5,15 @@
 {% endblock %}
 
 {% block content_title %}
-
+    Немецкие бренды:
 {% endblock %}
-{% block content %}
-    {% for i in text %}
-        {{ i }}
 
+{% block content %}
+    {% for post in posts %}
+        <div class="cars">
+            <a href="">
+                <button type="button" class="btn btn-success">{{ post.title }}</button>
+            </a>
+        </div>
     {% endfor %}
 {% endblock %}
