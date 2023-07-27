@@ -16,7 +16,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ post.title }}</h5>
                         <p class="card-text">{{ post.body }}</p>
-                        <a class="btn btn-primary" href="{%  url 'post_detail_url' slug=post.slug %}" role="button">Read</a>
+                        <a class="btn btn-primary" href="{{ post.get_absolute_url }}" role="button">Read</a>
                     </div>
                 </div>
             </a>

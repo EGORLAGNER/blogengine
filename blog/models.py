@@ -1,4 +1,5 @@
 from django.db import models
+from django.shortcuts import reverse
 
 
 class Post(models.Model):
@@ -7,7 +8,8 @@ class Post(models.Model):
     body = models.TextField(blank=True, db_index=True)
     data_pub = models.DateTimeField(auto_now_add=True)
 
+    def get_absolute_url(self):
+        return reverse('post_detail_url', kwargs={'slug': self.slug})
+
     def __str__(self):
         return f'{self.title}'
-
-
