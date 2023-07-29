@@ -10,4 +10,10 @@
 
 {% block content %}
     {{ post.body }}
+    <h6>Теги поста:</h6>
+        {% for tag in all_tags %}
+            <a class="btn btn-primary" href="{{ tag.get_absolute_url }}" role="button">tag</a>
+        {% endfor %}
+
+
 {% endblock %}

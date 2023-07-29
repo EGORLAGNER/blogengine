@@ -1,0 +1,25 @@
+{% extends 'blog/base_blog.html' %}
+
+{% block title %}
+    страница блога
+{% endblock %}
+
+{% block content_title %}
+    Немецкие бренды:
+{% endblock %}
+
+{% block content %}
+    {% for tag in tags %}
+        <div class="cars">
+            <a href="">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ tag.title }}</h5>
+                        <p class="card-text">{{ tag.body }}</p>
+                        <a class="btn btn-primary" href="{{ tag.get_absolute_url }}" role="button">Read</a>
+                    </div>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+{% endblock %}
