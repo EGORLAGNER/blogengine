@@ -5,7 +5,11 @@
 {% endblock %}
 
 {% block content_title %}
-    {{ tag.title }}
+    {{ tag.title|title }}
+    {% for post in all_posts %}
+        {{ post }}
+    {% endfor %}
+
 {% endblock %}
 
 {% block content %}
