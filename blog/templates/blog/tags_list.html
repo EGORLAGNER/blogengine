@@ -5,20 +5,17 @@
 {% endblock %}
 
 {% block content_title %}
-    список тегов:
 {% endblock %}
 
 {% block content %}
+    <h5>Теги:</h5>
     {% for tag in tags %}
-        <div class="cars">
-            <a href="{{ tag.get_absolute_url }}">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ tag.title }}</h5>
-                        <a class="btn btn-primary" href="{{ tag.get_absolute_url }}" role="button">Read</a>
-                    </div>
+        <div class="post">
+            <div class="card" style="width: 8rem;">
+                <div class="card-body">
+                    <a class="btn btn-secondary" href="{{ tag.get_absolute_url }}" role="button">{{ tag }}</a>
                 </div>
-            </a>
+            </div>
         </div>
     {% endfor %}
 {% endblock %}

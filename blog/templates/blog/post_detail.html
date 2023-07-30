@@ -5,15 +5,23 @@
 {% endblock %}
 
 {% block content_title %}
-    {{ post.title }}
 {% endblock %}
 
 {% block content %}
-    {{ post.body }}
-    <h6>Теги поста:</h6>
-        {% for tag in all_tags %}
-            <a class="btn btn-primary" href="{{ tag.get_absolute_url }}" role="button">tag</a>
-        {% endfor %}
+    <div class="post">
+        <div class="card" style="width: 80rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <h6 class="card-text">{{ post.body }}</h6>
+                <h6 class="card-data">{{ post.data_pub }}</h6>
+                {% for tag in all_tags %}
+                    <a class="btn btn-secondary" href="{{ tag.get_absolute_url }}" role="button">{{ tag }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
 
 
 {% endblock %}
+

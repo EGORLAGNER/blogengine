@@ -5,18 +5,18 @@
 {% endblock %}
 
 {% block content_title %}
-    Список всех постов:
 {% endblock %}
 
 {% block content %}
+    <h5>Список всех постов:</h5>
     {% for post in posts %}
-        <div class="pots">
+        <div class="post">
             <div class="card" style="width: 25rem;">
                 <div class="card-body">
                     <h5 class="card-title">{{ post.title }}</h5>
-                    <h6 class="card-text">{{ post.body }}</h6>
-                    <p class="card-data">{{ post.data_pub }}</p>
-                    <a class="btn btn-primary" href="{{ post.get_absolute_url }}" role="button">читать</a>
+                    <h6 class="card-text">{{ post.body|truncatewords:10 }}</h6>
+                    <h6 class="card-data">{{ post.data_pub}}</h6>
+                    <a class="btn btn-success" href="{{ post.get_absolute_url }}" role="button">читать</a>
                 </div>
             </div>
         </div>

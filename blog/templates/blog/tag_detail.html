@@ -5,9 +5,18 @@
 {% endblock %}
 
 {% block content_title %}
-    {{ tag.title|title }}
+    <h5>Посты для тега: {{ tag.title }}</h5>
     {% for post in all_posts %}
-        {{ post }}
+        <div class="post">
+            <div class="card" style="width: 25rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <h6 class="card-text">{{ post.body|truncatewords:10 }}</h6>
+                    <h6 class="card-data">{{ post.data_pub}}</h6>
+                    <a class="btn btn-success" href="{{ post.get_absolute_url }}" role="button">читать</a>
+                </div>
+            </div>
+        </div>
     {% endfor %}
 
 {% endblock %}
