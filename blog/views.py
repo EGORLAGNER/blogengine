@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.views.generic import View
 from .models import *
+from .utils import ObjectDetailMixin
 
 
 def posts_list(request):
@@ -18,18 +19,28 @@ get_object_or_404 принимает два аргумента: класс мо�
 если модель не найдена, то пользователь увидит ответ со статусом 404
 '''
 
-
 # def post_detail(request, slug):
 #     post = Post.objects.get(slug__iexact=slug)
 #     all_tags = post.tags.all()
 #     return render(request, 'blog/post_detail.html', context={'post': post, 'all_tags': all_tags})
 
 
-class PostDetail(View):
-    def get(self, request, slug):
-        post = get_object_or_404(Post, slug__iexact=slug)
-        all_tags = post.tags.all()
-        return render(request, 'blog/post_detail.html', context={'post': post, 'all_tags': all_tags})
+# class PostDetail(View):
+#     def get(self, request, slug):
+#         post = get_object_or_404(Post, slug__iexact=slug)
+#         all_tags = post.tags.all()
+#         return render(request, 'blog/post_detail.html', context={'post': post, 'all_tags': all_tags})
+
+'''
+PostDetail является миксином.
+Обработчки tag_detail выполнен функцией как в первых уроках Молчанова.
+Я специально не стал переписывать его с использованием класса или миксина, чтобы была наглядная разница в коде.
+'''
+
+
+class PostDetail(ObjectDetailMixin, View):
+    model = Post
+    template = 'blog/post_detail.html'
 
 
 def tags_list(request):
