@@ -9,6 +9,7 @@
         {% csrf_token %}
         {{ form.title }}
         {{ form.slug }}
+        {{ form.errors }}
 
         <button type="submit" class="btn btn-primary">Create Tag</button>
     </form>
