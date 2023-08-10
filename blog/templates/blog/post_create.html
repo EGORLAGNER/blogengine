@@ -5,13 +5,16 @@
 {% endblock %}
 
 {% block content %}
-    <form action="{% url 'tag_create_url' %}" method="post">
+    <form action="{% url 'post_create_url' %}" method="post">
         {% csrf_token %}
         {{ form.title }}
         {{ form.slug }}
+        {{ form.body }}
+        {{ form.tags }}
         {{ form.errors }}
 
-        <button type="submit" class="btn btn-primary">создать Tag</button>
+
+        <button type="submit" class="btn btn-primary">создать Post</button>
     </form>
 {% endblock %}
 

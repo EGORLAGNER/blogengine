@@ -1,0 +1,10 @@
+{% extends 'blog/base_blog.html' %}
+
+{% block title %}
+    {{ post.title }} - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <h5>пост '{{ post }}' создан!</h5>
+{% endblock %}
+
