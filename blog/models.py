@@ -18,7 +18,8 @@ class Post(models.Model):
     data_pub = models.DateTimeField(auto_now_add=True)
 
     def get_absolute_url(self):
-        return reverse('post_detail_url', kwargs={'slug': self.slug})
+        reverse_url = reverse('post_detail_url', kwargs={'slug': self.slug})
+        return reverse_url
 
     def save(self, *args, **kwargs):
         if not self.id:

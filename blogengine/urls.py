@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', main_page, name='main_page_url'),
     path('blog/', include('blog.urls')),
+    path('under/', under_page, name='under_page')
 ]

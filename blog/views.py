@@ -43,6 +43,12 @@ class PostDetail(ObjectDetailMixin, View):
     template = 'blog/post_detail.html'
 
 
+def tag_detail(request, slug):
+    tag = Tag.objects.get(slug__iexact=slug)
+    all_posts_from_tag = tag.posts.all()
+    return render(request, 'blog/tag_detail.html', context={'tag': tag, 'all_posts': all_posts_from_tag})
+
+
 def tags_list(request):
     tags = Tag.objects.all()
     return render(request, 'blog/tags_list.html', context={'tags': tags})
@@ -82,7 +88,8 @@ class PostCreate(View):
         return render(request, 'blog/post_create.html', context={'form': bound_form})
 
 
-def tag_detail(request, slug):
-    tag = Tag.objects.get(slug__iexact=slug)
-    all_posts_from_tag = tag.posts.all()
-    return render(request, 'blog/tag_detail.html', context={'tag': tag, 'all_posts': all_posts_from_tag})
+class TagUpdate(View):
+    def get(self, request, slug):
+        tag = Tag.objects.get(slug__exact=slug)
+        bound_form = TagForm(instance=tag)
+        return render(request, 'blog/tag_update_form.html', context={'form': bound_form, 'tag': tag})
