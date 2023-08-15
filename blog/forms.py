@@ -8,6 +8,12 @@ class TagForm(forms.ModelForm):
         model = Tag
         fields = ['title', 'slug']
 
+        """
+        widgets отвечают за то, как будут выглядеть поля в браузере.
+        могут заниматься валидацией и форматированием данных.
+        в конкретном примере формы будут работать и атрибутов.
+        конкретные указанные атрибуты - это bootstrap.
+        """
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'slug': forms.TextInput(attrs={'class': 'form-control'}),

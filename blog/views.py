@@ -55,22 +55,26 @@ def tags_list(request):
 
 
 class TagCreate(View):
+    """Отображение формы """
+
     def get(self, request):
         """
         При обращении пользователя по URL отображается форма, в которую
         пользователь будет вносить данные.
         """
         form = TagForm()
-        return render(request, 'blog/tag_create.html', context={'form': form})
+        template_name = 'blog/tag_create.html'
+        context = {'form': form}
+        return render(request, template_name, context)
 
     def post(self, request):
-        bound_form = TagForm(request.POST)
+        form = TagForm(request.POST)
 
-        if bound_form.is_valid():
-            bound_form.save()
+        if form.is_valid():
+            form.save()
             saved_tag = request.POST['title']
             return render(request, 'blog/tag_create_confirm.html', context={'tag': saved_tag})
-        return render(request, 'blog/tag_create.html', context={'form': bound_form})
+        return render(request, 'blog/tag_create.html', context={'form': form})
 
 
 class PostCreate(View):
@@ -102,5 +106,3 @@ class TagUpdate(View):
             new_tag = bound_form.save()
             return render(request, 'blog/tag_create_confirm.html', context={'tag': new_tag})
         return render(request, 'blog/tag_update_form.html', context={'form': bound_form, 'tag': tag})
-
-
