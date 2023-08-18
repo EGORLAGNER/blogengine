@@ -48,9 +48,9 @@ class TagCreate(View):
     def get(self, request):
         """Показывает пустую форму"""
         form = TagForm()
-        template_name = 'blog/tag_create.html'
+        template = 'blog/tag_create.html'
         context = {'form': form}
-        return render(request, template_name, context)
+        return render(request, template, context)
 
     def post(self, request):
         """Принимает введенные пользователем данные, проверяет валидность данных:
@@ -101,17 +101,45 @@ def tags_list(request):
 
 class TagUpdate(View):
     """Изменяет тег"""
+
     def get(self, request, slug):
         """Показывает форму с заполненными полями"""
         tag = Tag.objects.get(slug__exact=slug)
-        bound_form = TagForm(instance=tag)
-        return render(request, 'blog/tag_update_form.html', context={'form': bound_form, 'tag': tag})
+        form = TagForm(instance=tag)
+        return render(request, 'blog/tag_update_form.html', context={'form': form, 'tag': tag})
 
     def post(self, request, slug):
+        """Принимает введенные пользователем данные, проверяет валидность данных:
+                    если данные валидны, то сохраняет их в базу и показывает страницу с подтверждением;
+                    если данные не валидны, то показывает туже самую страницу с формой, что и в GET запросе"""
         tag = Tag.objects.get(slug__iexact=slug)
-        bound_form = TagForm(request.POST, instance=tag)
+        form = TagForm(request.POST, instance=tag)
 
-        if bound_form.is_valid():
-            new_tag = bound_form.save()
+        if form.is_valid():
+            new_tag = form.save()
             return render(request, 'blog/tag_create_confirm.html', context={'tag': new_tag})
-        return render(request, 'blog/tag_update_form.html', context={'form': bound_form, 'tag': tag})
+        return render(request, 'blog/tag_update_form.html', context={'form': form, 'tag': tag})
+
+
+class PostUpdate(View):
+    """Изменяет пост"""
+
+    def get(self, request, slug):
+        """Показывает форму с заполненными полями"""
+        post = Post.objects.get(slug__iexact=slug)
+        form = PostForm(instance=post)
+        template = 'blog/post_update_form.html'
+        context = {'post': post, 'form': form}
+        return render(request, template, context)
+
+    def post(self, request, slug):
+        """Принимает введенные пользователем данные, проверяет валидность данных:
+                            если данные валидны, то сохраняет их в базу и показывает страницу с подтверждением;
+                            если данные не валидны, то показывает туже самую страницу с формой, что и в GET запросе"""
+        post = Post.objects.get(slug__iexact=slug)
+        form = PostForm(request.POST, instance=post)
+
+        if form.is_valid():
+            new_post = form.save()
+            return render(request, 'blog/post_create_confirm.html', context={'post': new_post})
+        return render(request, 'blog/post_update_form.html', context={'form': form, 'post': post})

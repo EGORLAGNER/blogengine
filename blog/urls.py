@@ -12,4 +12,5 @@ urlpatterns = [
     path('tag_create', TagCreate.as_view(), name='tag_create_url'),
     path('post_create', PostCreate.as_view(), name='post_create_url'),
     path('tags/<str:slug>/update', TagUpdate.as_view(), name='tag_update_url'),
+    path('post/<str:slug>/update', PostUpdate.as_view(), name='post_update_url'),
 ]

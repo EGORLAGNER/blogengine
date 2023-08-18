@@ -21,6 +21,10 @@ class Post(models.Model):
         reverse_url = reverse('post_detail_url', kwargs={'slug': self.slug})
         return reverse_url
 
+    def get_update_url(self):
+        reverse_url = reverse('post_update_url', kwargs={'slug': self.slug})
+        return reverse_url
+
     def save(self, *args, **kwargs):
         if not self.id:
             self.slug = gen_slug(self.title)
