@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views.generic import View
 from .forms import *
 
@@ -99,28 +99,6 @@ def tags_list(request):
 """UPDATE"""
 
 
-class TagUpdate(View):
-    """Изменяет тег"""
-
-    def get(self, request, slug):
-        """Показывает форму с заполненными полями"""
-        tag = Tag.objects.get(slug__exact=slug)
-        form = TagForm(instance=tag)
-        return render(request, 'blog/tag/tag_update_form.html', context={'form': form, 'tag': tag})
-
-    def post(self, request, slug):
-        """Принимает введенные пользователем данные, проверяет валидность данных:
-                    если данные валидны, то сохраняет их в базу и показывает страницу с подтверждением;
-                    если данные не валидны, то показывает туже самую страницу с формой, что и в GET запросе"""
-        tag = Tag.objects.get(slug__iexact=slug)
-        form = TagForm(request.POST, instance=tag)
-
-        if form.is_valid():
-            new_tag = form.save()
-            return render(request, 'blog/tag/tag_create_confirm.html', context={'tag': new_tag})
-        return render(request, 'blog/tag/tag_update_form.html', context={'form': form, 'tag': tag})
-
-
 class PostUpdate(View):
     """Изменяет пост"""
 
@@ -143,3 +121,50 @@ class PostUpdate(View):
             new_post = form.save()
             return render(request, 'blog/post/post_create_confirm.html', context={'post': new_post})
         return render(request, 'blog/post/post_update_form.html', context={'form': form, 'post': post})
+
+
+class TagUpdate(View):
+    """Изменяет тег"""
+
+    def get(self, request, slug):
+        """Показывает форму с заполненными полями"""
+        tag = Tag.objects.get(slug__exact=slug)
+        form = TagForm(instance=tag)
+        return render(request, 'blog/tag/tag_update_form.html', context={'form': form, 'tag': tag})
+
+    def post(self, request, slug):
+        """Принимает введенные пользователем данные, проверяет валидность данных:
+                    если данные валидны, то сохраняет их в базу и показывает страницу с подтверждением;
+                    если данные не валидны, то показывает туже самую страницу с формой, что и в GET запросе"""
+        tag = Tag.objects.get(slug__iexact=slug)
+        form = TagForm(request.POST, instance=tag)
+
+        if form.is_valid():
+            new_tag = form.save()
+            return render(request, 'blog/tag/tag_create_confirm.html', context={'tag': new_tag})
+        return render(request, 'blog/tag/tag_update_form.html', context={'form': form, 'tag': tag})
+
+
+"""DELETE"""
+
+
+class PostDelete(View):
+    def get(self, request, slug):
+        post = Post.objects.get(slug__iexact=slug)
+        return render(request, 'blog/post/post_delete.html', context={'post': post})
+
+    def post(self, request, slug):
+        post = Post.objects.get(slug__iexact=slug)
+        post.delete()
+        return redirect(reverse('posts_list_url'))
+
+
+class TagDelete(View):
+    def get(self, request, slug):
+        tag = Tag.objects.get(slug__iexact=slug)
+        return render(request, 'blog/tag/tag_delete.html', context={'tag': tag})
+
+    def post(self, request, slug):
+        tag = Tag.objects.get(slug__iexact=slug)
+        tag.delete()
+        return redirect(reverse('tags_list_url'))
