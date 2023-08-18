@@ -30,7 +30,7 @@ get_object_or_404 принимает два аргумента: класс мо�
 class PostCreate(View):
     def get(self, request):
         form = PostForm()
-        return render(request, 'blog/post_create.html', context={'form': form})
+        return render(request, 'blog/post/post_create.html', context={'form': form})
 
     def post(self, request):
         bound_form = PostForm(request.POST)
@@ -38,8 +38,8 @@ class PostCreate(View):
         if bound_form.is_valid():
             bound_form.save()
             saved_post = request.POST['title']
-            return render(request, 'blog/post_create_confirm.html', context={'post': saved_post})
-        return render(request, 'blog/post_create.html', context={'form': bound_form})
+            return render(request, 'blog/post/post_create_confirm.html', context={'post': saved_post})
+        return render(request, 'blog/post/post_create.html', context={'form': bound_form})
 
 
 class TagCreate(View):
@@ -48,7 +48,7 @@ class TagCreate(View):
     def get(self, request):
         """Показывает пустую форму"""
         form = TagForm()
-        template = 'blog/tag_create.html'
+        template = 'blog/tag/tag_create.html'
         context = {'form': form}
         return render(request, template, context)
 
@@ -61,8 +61,8 @@ class TagCreate(View):
         if form.is_valid():
             form.save()
             saved_tag = request.POST['title']
-            return render(request, 'blog/tag_create_confirm.html', context={'tag': saved_tag})
-        return render(request, 'blog/tag_create.html', context={'form': form})
+            return render(request, 'blog/tag/tag_create_confirm.html', context={'tag': saved_tag})
+        return render(request, 'blog/tag/tag_create.html', context={'form': form})
 
 
 """READ"""
@@ -74,14 +74,14 @@ class PostDetail(View):
     def get(self, request, slug):
         post = get_object_or_404(Post, slug__iexact=slug)
         all_tags = post.tags.all()
-        return render(request, 'blog/post_detail.html', context={'post': post, 'all_tags': all_tags})
+        return render(request, 'blog/post/post_detail.html', context={'post': post, 'all_tags': all_tags})
 
 
 def tag_detail(request, slug):
     """Показывает все посты связанные с тегом"""
     tag = Tag.objects.get(slug__iexact=slug)
     all_posts_from_tag = tag.posts.all()
-    return render(request, 'blog/tag_detail.html', context={'tag': tag, 'all_posts': all_posts_from_tag})
+    return render(request, 'blog/tag/tag_detail.html', context={'tag': tag, 'all_posts': all_posts_from_tag})
 
 
 def posts_list(request):
@@ -93,7 +93,7 @@ def posts_list(request):
 def tags_list(request):
     """Показывает все теги"""
     tags = Tag.objects.all()
-    return render(request, 'blog/tags_list.html', context={'tags': tags})
+    return render(request, 'blog/tag/tags_list.html', context={'tags': tags})
 
 
 """UPDATE"""
@@ -106,7 +106,7 @@ class TagUpdate(View):
         """Показывает форму с заполненными полями"""
         tag = Tag.objects.get(slug__exact=slug)
         form = TagForm(instance=tag)
-        return render(request, 'blog/tag_update_form.html', context={'form': form, 'tag': tag})
+        return render(request, 'blog/tag/tag_update_form.html', context={'form': form, 'tag': tag})
 
     def post(self, request, slug):
         """Принимает введенные пользователем данные, проверяет валидность данных:
@@ -117,8 +117,8 @@ class TagUpdate(View):
 
         if form.is_valid():
             new_tag = form.save()
-            return render(request, 'blog/tag_create_confirm.html', context={'tag': new_tag})
-        return render(request, 'blog/tag_update_form.html', context={'form': form, 'tag': tag})
+            return render(request, 'blog/tag/tag_create_confirm.html', context={'tag': new_tag})
+        return render(request, 'blog/tag/tag_update_form.html', context={'form': form, 'tag': tag})
 
 
 class PostUpdate(View):
@@ -128,7 +128,7 @@ class PostUpdate(View):
         """Показывает форму с заполненными полями"""
         post = Post.objects.get(slug__iexact=slug)
         form = PostForm(instance=post)
-        template = 'blog/post_update_form.html'
+        template = 'blog/post/post_update_form.html'
         context = {'post': post, 'form': form}
         return render(request, template, context)
 
@@ -141,5 +141,5 @@ class PostUpdate(View):
 
         if form.is_valid():
             new_post = form.save()
-            return render(request, 'blog/post_create_confirm.html', context={'post': new_post})
-        return render(request, 'blog/post_update_form.html', context={'form': form, 'post': post})
+            return render(request, 'blog/post/post_create_confirm.html', context={'post': new_post})
+        return render(request, 'blog/post/post_update_form.html', context={'form': form, 'post': post})
